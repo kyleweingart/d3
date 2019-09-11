@@ -42,6 +42,10 @@ var data = [
     "value": 5
   },
   {
+    "name": "W",
+    "value": 11
+  },
+  {
     "name": "WNW",
     "value": 16
   },
@@ -141,23 +145,22 @@ svg.append('text')
 
 var g = d3.select('#surge-chart-group');
 
-// g.selectAll('*').remove();
-
 // Setup x
 x = d3.scaleBand()
-  .domain(dirs)
+  // .domain(dirs)
   .range([25, width - 125]);
 this.xMap = function (d) {
   d = d.direction ? d.direction.toUpperCase() : d;
   return xScale(d);
 };
+
 var xAxis = d3.axisBottom().scale(x)
-  .tickSize(height, 0)
-  .tickPadding(12);
+  // .tickSize(height, 0)
+  // .tickPadding(12);
 
 //     // Setup y
 y = d3.scaleLinear()
-  .domain([-1, 20 + 3])
+  // .domain([-1, 20 + 3])
   .range([height, 0]);
 this.yMap = function (d) {
   return yScale(d.surge || d);
@@ -168,28 +171,27 @@ var yAxis = d3.axisLeft().scale(y)
   .tickSize(-width + 100, 1);
 
 //     // Create the axes
-g.append('g')
-  .attr('class', 'x axis')
-  .call(xAxis);
-g.append('g')
-  .attr('class', 'y axis')
-  .call(yAxis);
+// g.append('g')
+//   .attr('class', 'x axis')
+//   .call(xAxis);
+// g.append('g')
+//   .attr('class', 'y axis')
+//   .call(yAxis);
 
 g.selectAll('.axis')
-  // console.log(g.selectAll('.axis'));
   .selectAll('.tick:nth-last-child(n+2)')
   .selectAll('line')
   .style('stroke', 'black');
 
-g.selectAll('.x.axis')
-  .selectAll('line')
-  .attr('stroke-width', 1)
-  .attr('stroke-dasharray', '2,4')
-  .style('stroke', 'grey');
+// g.selectAll('.x.axis')
+//   .selectAll('line')
+//   .attr('stroke-width', 1)
+//   .attr('stroke-dasharray', '2,4')
+//   .style('stroke', 'grey');
 
 
-// x.domain(data.map(function (d) { return d.name; }));
-// y.domain([0, d3.max(data, function (d) { return d.value; })]);
+x.domain(data.map(function (d) { return d.name; }));
+y.domain([0, d3.max(data, function (d) { return d.value; })]);
 
         g.append("g")
             .attr("class", "x axis")
@@ -207,60 +209,20 @@ g.selectAll('.x.axis')
             .attr("x", function(d) { console.log(d.name); return x(d.name); })
             .attr("y", function(d) { console.log(d.value); return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); })
-            // .attr("width", x.rangeBand());
             .attr("width", "20")
-            // .attr("fill", 'red');
-      // });
+            
+     
 
-      var bar = chart.selectAll(".bar");
-      console.log(bar);
-
-      // function type(d) {
-      //   d.value = +d.value; // coerce to number
-      //   console.log(d);
-      //   return d;
-      // }
+     
 
 
 
 
-//         // for (var i = 0; i < data.length; i++) {
-//         //   console.log(data[i].name);
-//         //   console.log(data[i].value);
-//         // }
-//         // data.forEach(function(d) {
-//         //     console.log(d);
-//         //     d.value = +d.value;
-//         // })
-//         // xScale.domain(data.map(function(d) { return d.name; }));
-//         // yScale.domain([0, d3.max(data, function(d) { return d.value; })]);
-
-//         chart.append("g")
-//             .attr("class", "x axis")
-//             .attr("transform", "translate(0," + height + ")")
-//             .call(xAxis);
-
-//         chart.append("g")
-//             .attr("class", "y axis")
-//             .call(yAxis);
-
-//         chart.selectAll(".bar")
-//             .data(data)
-//           .enter().append("rect")
-//             .attr("class", "bar")
-//             .attr("x", function(d) { return xScale(d.name); })
-//             .attr("y", function(d) { return yScale(d.value); })
-//             .attr("height", function(d) { return height - yScale(d.value); })
-//             .attr("width", "5px");
-      // });
 
 
 
 
-// function type(d) {
-//       d.value = +d.value; // coerce to number
-//       console.log(d);
-//       return d;
-//     }
+
+
 
 

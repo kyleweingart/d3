@@ -23,26 +23,26 @@
 
 </style>
 <svg class="chart"></svg>
-<script src="//d3js.org/d3.v5.min.js"></script>
+<script src="//d3js.org/d3.v3.min.js"></script>
 <script>
 
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-var x = d3.scaleOrdinal()
-    .range([0, width], .1);
+var x = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .1);
 
-var y = d3.scaleLinear()
+var y = d3.scale.linear()
     .range([height, 0]);
 
-var xAxis = d3.axisBottom()
+var xAxis = d3.svg.axis()
     .scale(x)
-    // .orient("bottom");
+    .orient("bottom");
 
-var yAxis = d3.axisLeft()
+var yAxis = d3.svg.axis()
     .scale(y)
-    // .orient("left");
+    .orient("left");
 
 var chart = d3.select(".chart")
     .attr("width", width + margin.left + margin.right)
@@ -52,9 +52,9 @@ var chart = d3.select(".chart")
 
   
 
-d3.tsv("data1.tsv", function(error, data) {
+d3.tsv("data1.tsv", type, function(error, data) {
   console.log(data);
-  // x.domain(data.map(function(d) { return d.name; }));
+  x.domain(data.map(function(d) { return d.name; }));
   y.domain([0, d3.max(data, function(d) { return d.value; })]);
 
   chart.append("g")
@@ -76,10 +76,10 @@ d3.tsv("data1.tsv", function(error, data) {
       .attr("width", x.rangeBand());
 });
 
-// function type(d) {
-//   d.value = +d.value; // coerce to number
-//   console.log(d);
-//   return d;
-// }
+function type(d) {
+  d.value = +d.value; // coerce to number
+  console.log(d);
+  return d;
+}
 
 </script>
