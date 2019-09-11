@@ -95,9 +95,6 @@ var data = [
   }
 ];
 
-var xScale;
-var yScale;
-
 var topGraphPadding = 10;
 
 // Create the svg to draw on
@@ -146,56 +143,45 @@ svg.append('text')
 var g = d3.select('#surge-chart-group');
 
 // Setup x
-x = d3.scaleBand()
-  // .domain(dirs)
+var x = d3.scaleBand()
+  // .rangeRound([0,width])
+  .paddingInner(.1)
+  .domain(data.map(function (d) { return d.name; }))
+  
+  // .range([5, width- 100]);
   .range([25, width - 125]);
 this.xMap = function (d) {
   d = d.direction ? d.direction.toUpperCase() : d;
-  return xScale(d);
+  return x(d);
 };
 
 var xAxis = d3.axisBottom().scale(x)
-  // .tickSize(height, 0)
-  // .tickPadding(12);
+//   .tickSize(height, 0)
+  .tickPadding(10);
 
 //     // Setup y
-y = d3.scaleLinear()
+var y = d3.scaleLinear()
+  .domain([0, d3.max(data, function (d) { return d.value + 3; })])
   // .domain([-1, 20 + 3])
   .range([height, 0]);
 this.yMap = function (d) {
-  return yScale(d.surge || d);
+  return y(d.surge || d);
 };
 var yAxis = d3.axisLeft().scale(y)
   .ticks(4)
   .tickPadding(12)
   .tickSize(-width + 100, 1);
 
-//     // Create the axes
-// g.append('g')
-//   .attr('class', 'x axis')
-//   .call(xAxis);
-// g.append('g')
-//   .attr('class', 'y axis')
-//   .call(yAxis);
+// g.selectAll('.axis')
+  // .selectAll('.tick:nth-last-child(n+2)')
+  // .selectAll('line')
+  // .style('stroke', 'black');
 
-g.selectAll('.axis')
-  .selectAll('.tick:nth-last-child(n+2)')
-  .selectAll('line')
-  .style('stroke', 'black');
-
-// g.selectAll('.x.axis')
-//   .selectAll('line')
-//   .attr('stroke-width', 1)
-//   .attr('stroke-dasharray', '2,4')
-//   .style('stroke', 'grey');
-
-
-x.domain(data.map(function (d) { return d.name; }));
-y.domain([0, d3.max(data, function (d) { return d.value; })]);
 
         g.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
+            // .attr("transform", "translate(-5, 0)")
             .call(xAxis);
 
         g.append("g")
@@ -210,6 +196,12 @@ y.domain([0, d3.max(data, function (d) { return d.value; })]);
             .attr("y", function(d) { console.log(d.value); return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); })
             .attr("width", "20")
+
+
+         var tick =   g.selectAll('.tick');
+          console.log(tick);
+
+
             
      
 

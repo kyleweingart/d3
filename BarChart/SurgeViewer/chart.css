@@ -1,6 +1,10 @@
 .bar {
-    fill: steelblue;
+    fill: orange;
   }
+
+.bar:hover {
+  fill: orangered;
+}
   
   .axis text {
     font: 10px sans-serif;
