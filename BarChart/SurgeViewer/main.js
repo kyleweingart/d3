@@ -99,12 +99,12 @@ var topGraphPadding = 10;
 
 // Create the svg to draw on
 var svg = d3.select('.chart').append('svg')
-.attr("width", width + margin.left + margin.right)
-.attr("height", height + margin.top + margin.bottom)
+  .attr("width", width + margin.left + margin.right)
+  .attr("height", height + margin.top + margin.bottom)
 
 svg.append('g')
-.attr('id', 'surge-chart-group')
-.attr("transform", "translate(100,10)");
+  .attr('id', 'surge-chart-group')
+  .attr("transform", "translate(100,10)");
 
 
 // Draw a box to contain the chart
@@ -119,88 +119,122 @@ var chart = svg.append('rect')
 
 // Add the y-axis label
 var yLabel = svg.append('text')
-.style('text-anchor', 'middle')
-.attr('fill', 'black')
-.style('font-size', '14px')
+  .style('text-anchor', 'middle')
+  .attr('fill', 'black')
+  .style('font-size', '14px')
   .style('font-family', 'sans-serif')
   .style('font-weight', 'bold')
   .text('Surge Height (ft. - AGL)');
-  
-  
-  yLabel.attr('transform', 'translate(48,' +
-  (height/ 1.75) + ')rotate(-90)');
-  
-  // Add the x-axis label
-  svg.append('text')
+
+
+yLabel.attr('transform', 'translate(48,' +
+  (height / 1.75) + ')rotate(-90)');
+
+// Add the x-axis label
+svg.append('text')
   .attr('transform', 'translate(' + 12 + ',' + (height + 31) + ')')
   .attr('fill', 'black')
   .style('font-size', '14px')
   .style('font-family', 'sans-serif')
   .style('font-weight', 'bold')
   .text('Direction:');
-  
-  
-  var g = d3.select('#surge-chart-group');
-  
-  // Setup x
-  var x = d3.scaleBand()
+
+
+var g = d3.select('#surge-chart-group');
+
+// Setup x
+var x = d3.scaleBand()
   .rangeRound([0, width])
   // .paddingInner(.1)
   .padding(0.2)
   .domain(data.map(function (d) { return d.name; }))
-  
+
   // .range([5, width- 100]);
   .range([25, width - 125]);
-  this.xMap = function (d) {
-    d = d.direction ? d.direction.toUpperCase() : d;
-    return x(d);
-  };
-  
-  var xAxis = d3.axisBottom().scale(x)
+this.xMap = function (d) {
+  d = d.direction ? d.direction.toUpperCase() : d;
+  return x(d);
+};
+
+var xAxis = d3.axisBottom().scale(x)
   //   .tickSize(height, 0)
   .tickPadding(10);
-  
-  //     // Setup y
-  var y = d3.scaleLinear()
+
+//     // Setup y
+var y = d3.scaleLinear()
   .domain([0, d3.max(data, function (d) { return d.value + 3; })])
   // .domain([-1, 20 + 3])
   .range([height, 0]);
-  this.yMap = function (d) {
-    return y(d.surge || d);
-  };
-  var yAxis = d3.axisLeft().scale(y)
+this.yMap = function (d) {
+  return y(d.surge || d);
+};
+var yAxis = d3.axisLeft().scale(y)
   .ticks(4)
   .tickPadding(12)
   .tickSize(-width + 100, 1);
-  
-  
-  g.append("g")
+
+
+g.append("g")
   .attr("class", "x axis")
   .attr("transform", "translate(0," + height + ")")
   // .attr("transform", "translate(-5, 0)")
   .call(xAxis);
-  
-  g.append("g")
+
+g.append("g")
   .attr("class", "y axis")
   .call(yAxis);
-  
-  g.selectAll(".bar")
+
+var div = d3.select('.chart').append('div')
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+g.selectAll(".bar")
   .data(data)
   .enter().append("rect")
   .attr("class", "bar")
-  .attr("x", function (d) {return x(d.name); })
-  .attr("y", function (d) {return y(d.value); })
+  .attr("x", function (d) { return x(d.name); })
+  .attr("y", function (d) { return y(d.value); })
   .attr("height", function (d) { return height - y(d.value); })
-  .attr("width", x.bandwidth());
-  
-  
-  
-  
-  
-  
-  
-  
-  
+  .attr("width", x.bandwidth())
+  .on("mouseover", function (d, i) {
+    var xPos = +d3.select(this).attr("x")
+    var wid = +d3.select(this).attr("width");
+    d3.select(this).attr("x", xPos - 4).attr("width", wid + 8);
+    div.transition()
+       .duration('100')
+       .style('opacity', 1);
+       div.html("Depth" + d3.format(".2f")(d.value))
+               .style("left", (d3.event.pageX + 10) + "px")
+               .style("top", (d3.event.pageY - 15) + "px");
+  })
+  .on("mouseout", function () {
+    d3.select(this).attr("x", function (d) {
+      return x(d.name)
+    })
+      .attr("width", x.bandwidth());
+      div.transition()
+               .duration('200')
+               .style("opacity", 0);
+  });
+//   .on('mouseover', function (d, i) {
+//     d3.select(this).transition()
+//          .duration('100')
+//          .attr("width", 34 + 3);
+// })
+//   .on('mouseout', function (d, i) {
+//     d3.select(this).transition()
+//          .duration('200')
+//          .attr("width", 34);
+// });
+
+
+
+
+
+
+
+
+
 
 
 
