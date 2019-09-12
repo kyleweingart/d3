@@ -1,22 +1,28 @@
 .bar {
-    fill: orange;
-  }
+  fill: orange;
+  position: relative;
+  z-index: 100;
+}
 
 .bar:hover {
   fill: orangered;
 }
-  
-  .axis text {
-    font: 10px sans-serif;
-  }
-  
-  .axis path,
-  .axis line {
-    fill: none;
-    stroke: #000;
-    shape-rendering: crispEdges;
-  }
-  
-  .x.axis path {
-    display: none;
-  }
+
+#surge-chart-box {
+  pointer-events: none;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
