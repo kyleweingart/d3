@@ -144,8 +144,9 @@ var g = d3.select('#surge-chart-group');
 
 // Setup x
 var x = d3.scaleBand()
-  // .rangeRound([0,width])
-  .paddingInner(.1)
+  .rangeRound([0,width])
+  // .paddingInner(.1)
+  .padding(0.2)
   .domain(data.map(function (d) { return d.name; }))
   
   // .range([5, width- 100]);
@@ -195,7 +196,8 @@ var yAxis = d3.axisLeft().scale(y)
             .attr("x", function(d) { console.log(d.name); return x(d.name); })
             .attr("y", function(d) { console.log(d.value); return y(d.value); })
             .attr("height", function(d) { return height - y(d.value); })
-            .attr("width", "20")
+            .attr("width", x.bandwidth())
+            .attr("stroke", gray);
 
 
          var tick =   g.selectAll('.tick');
