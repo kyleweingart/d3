@@ -4,26 +4,6 @@ var margin = { top: 20, right: 30, bottom: 30, left: 40 },
   width = 960 - margin.left - margin.right,
   height = 500 - margin.top - margin.bottom;
 
-var dirs = [
-  'S',
-  'SSW',
-  'SW',
-  'WSW',
-  'W',
-  'WNW',
-  'NW',
-  'NNW',
-  'N',
-  'NNE',
-  'NE',
-  'ENE',
-  'E',
-  'ESE',
-  'SE',
-  'SSE',
-  'PAR'
-];
-
 var data = [
   {
     "name": "S",
@@ -144,12 +124,9 @@ var g = d3.select('#surge-chart-group');
 
 // Setup x
 var x = d3.scaleBand()
-  .rangeRound([0, width])
-  // .paddingInner(.1)
+  // .rangeRound([0, width])
   .padding(0.2)
   .domain(data.map(function (d) { return d.name; }))
-
-  // .range([5, width- 100]);
   .range([25, width - 125]);
 this.xMap = function (d) {
   d = d.direction ? d.direction.toUpperCase() : d;
@@ -163,7 +140,6 @@ var xAxis = d3.axisBottom().scale(x)
 //     // Setup y
 var y = d3.scaleLinear()
   .domain([0, d3.max(data, function (d) { return d.value + 3; })])
-  // .domain([-1, 20 + 3])
   .range([height, 0]);
 this.yMap = function (d) {
   return y(d.surge || d);
@@ -198,14 +174,19 @@ g.selectAll(".bar")
   .attr("width", x.bandwidth())
   .on("mouseover", function (d, i) {
     var xPos = +d3.select(this).attr("x")
+    var yPos = +d3.select(this).attr("y")
     var wid = +d3.select(this).attr("width");
     d3.select(this).attr("x", xPos - 4).attr("width", wid + 8);
     div.transition()
        .duration('100')
        .style('opacity', 1);
-       div.html("Depth" + d3.format(".2f")(d.value))
-               .style("left", (d3.event.pageX + 10) + "px")
-               .style("top", (d3.event.pageY - 15) + "px");
+      //  div.html("Depth: " + (d.value))
+       div.html((d.value))
+              //  .style("left", (d3.event.pageX - 20) + "px")
+               .style("left", (xPos + 110) + "px")
+              //  .style("top", (d3.event.pageY - 25) + "px");
+               .style("top", (yPos + 25) + "px");
+
   })
   .on("mouseout", function () {
     d3.select(this).attr("x", function (d) {
@@ -216,16 +197,7 @@ g.selectAll(".bar")
                .duration('200')
                .style("opacity", 0);
   });
-//   .on('mouseover', function (d, i) {
-//     d3.select(this).transition()
-//          .duration('100')
-//          .attr("width", 34 + 3);
-// })
-//   .on('mouseout', function (d, i) {
-//     d3.select(this).transition()
-//          .duration('200')
-//          .attr("width", 34);
-// });
+
 
 
 
