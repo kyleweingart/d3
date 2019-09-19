@@ -1,0 +1,55 @@
+[{ "name": "S", 
+   "value": 2 
+}, 
+{ "name": "SSW", 
+   "value": 4 
+}, 
+{ "name": "SW", 
+   "value": 8 
+}, 
+{ "name": "WSW", 
+   "value": 5 
+}, 
+{ "name": "WNW", 
+   "value": 16 
+}, 
+{ "name": "NW", 
+   "value": 6 
+}, 
+{ "name": "NNW", 
+   "value": 17 
+}, 
+{ "name": "N", 
+   "value": 21 
+}, 
+{ "name": "NNE", 
+   "value": 2 
+}, 
+{ "name": "NE", 
+   "value": 3 
+}, 
+{ "name": "ENE", 
+   "value": 3 
+}, 
+{ "name": "E", 
+   "value": 4 
+}, 
+{ "name": "ESE", 
+   "value": 17
+}, 
+{ "name": "SE", 
+   "value": 22 
+}, 
+{ "name": "SSE", 
+   "value": 18 
+},
+{ "name": "PAR", 
+   "value": 5
+}]
+
+
+
+
+
+
+
