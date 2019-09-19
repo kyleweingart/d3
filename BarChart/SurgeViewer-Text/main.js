@@ -205,9 +205,11 @@ g.selectAll(".bar")
   .text(function(d) {
     return d.value;
   })
-  .attr("x", function(d, i) {return (i * 60) + 25})
-  .attr("y", function(d, i) {return 400 - (d * 10)});
-
+  // .attr("x", function(d, i) {console.log(d); console.log(i);return (i * 60) + 25})
+  // .attr("y", function(d, i) {console.log(d); console.log(i); return 400 - (d * 10)});
+  .attr('x', (d) => x(d.name) + x.bandwidth() / 2)
+  .attr('y', (d) => y(d.value) + 30)
+  .attr('text-anchor', 'middle')
 
 
 
