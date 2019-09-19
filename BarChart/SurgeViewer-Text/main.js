@@ -198,6 +198,16 @@ g.selectAll(".bar")
                .style("opacity", 0);
   });
 
+  g.selectAll('.text')
+  .data(data)
+  .enter().append("text")
+  .attr("class", "text")
+  .text(function(d) {
+    return d.value;
+  })
+  .attr("x", function(d, i) {return (i * 60) + 25})
+  .attr("y", function(d, i) {return 400 - (d * 10)});
+
 
 
 

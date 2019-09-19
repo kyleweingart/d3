@@ -199,6 +199,14 @@ g.selectAll(".bar")
   });
 
 
+  g.selectAll('.text')
+  .data(data)
+  .enter().append("text")
+  .attr("class", "text")
+  .text(function(d) {
+    return d.value;
+  })
+
 
 
 
