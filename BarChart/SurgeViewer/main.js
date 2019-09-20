@@ -199,7 +199,7 @@ g.selectAll(".bar")
   });
 
 
-  g.selectAll('.text')
+  g.selectAll('.bar')
   .data(data)
   .enter().append("text")
   .attr("class", "text")

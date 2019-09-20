@@ -164,75 +164,45 @@ var div = d3.select('.chart').append('div')
     .attr("class", "tooltip")
     .style("opacity", 0);
 
-g.selectAll(".bar")
+var bar = g.selectAll(".bar")
   .data(data)
   .enter().append("rect")
   .attr("class", "bar")
   .attr("x", function (d) { return x(d.name); })
   .attr("y", function (d) { return y(d.value); })
-  .attr("height", function (d) { console.log(height); console.log(y(d.value)); return height - y(d.value); })
+  .attr("height", function (d) { return height - y(d.value); })
   .attr("width", x.bandwidth())
   .on("mouseover", function (d, i) {
     var xPos = +d3.select(this).attr("x")
     var yPos = +d3.select(this).attr("y")
     var wid = +d3.select(this).attr("width");
     d3.select(this).attr("x", xPos - 4).attr("width", wid + 8);
-    div.transition()
-       .duration('100')
-       .style('opacity', 1);
-      //  div.html("Depth: " + (d.value))
-       div.html((d.value))
-              //  .style("left", (d3.event.pageX - 20) + "px")
-               .style("left", (xPos + 110) + "px")
-              //  .style("top", (d3.event.pageY - 25) + "px");
-               .style("top", (yPos + 25) + "px");
-
   })
   .on("mouseout", function () {
     d3.select(this).attr("x", function (d) {
       return x(d.name)
     })
       .attr("width", x.bandwidth());
-      div.transition()
-               .duration('200')
-               .style("opacity", 0);
   });
 
   g.selectAll('.text')
   .data(data)
   .enter().append("text")
   .attr("class", "text")
+  .attr('id', function(d,i) {
+    console.log(i);
+    return i;
+  })
   .text(function(d) {
     return d.value;
   })
-  // .attr("x", function(d, i) {console.log(d); console.log(i);return (i * 60) + 25})
-  // .attr("y", function(d, i) {console.log(d); console.log(i); return 400 - (d * 10)});
   .attr('x', (d) => x(d.name) + x.bandwidth() / 2)
   .attr('y', (d) => y(d.value) + 30)
   .attr('text-anchor', 'middle')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  .style('opacity', 0)
+  .on("mouseover", function (d, i) {
+    d3.select(this).style('opacity', 1);
+  })
+  .on('mouseout', function(d,i) {
+    d3.select(this).style("opacity", 0)
+  });
