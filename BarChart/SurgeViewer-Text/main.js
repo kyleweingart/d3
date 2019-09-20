@@ -194,7 +194,9 @@ var bar = g.selectAll(".bar")
     return d.value;
   })
   .attr('x', (d) => x(d.name) + x.bandwidth() / 2)
-  .attr('y', (d) => y(d.value) + 30)
+  .attr('y', (d) => y(d.value) + 25)
   .attr('text-anchor', 'middle')
-  .style('opacity', 0);
+  .style('opacity', 0)
+  .style('fill', '#f9f9f9');
+  
   
