@@ -160,10 +160,6 @@ g.append("g")
   .attr("class", "y axis")
   .call(yAxis);
 
-var div = d3.select('.chart').append('div')
-    .attr("class", "tooltip")
-    .style("opacity", 0);
-
 var bar = g.selectAll(".bar")
   .data(data)
   .enter().append("rect")
@@ -173,9 +169,8 @@ var bar = g.selectAll(".bar")
   .attr("height", function (d) { return height - y(d.value); })
   .attr("width", x.bandwidth())
   .on("mouseover", function (d, i) {
-    console.log(i);
     var xPos = +d3.select(this).attr("x")
-    var yPos = +d3.select(this).attr("y")
+    // var yPos = +d3.select(this).attr("y")
     var wid = +d3.select(this).attr("width");
     d3.select(this).attr("x", xPos - 4).attr("width", wid + 8);
     d3.select('#text' + i).style('opacity', 1);
